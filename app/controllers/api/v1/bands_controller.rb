@@ -3,7 +3,7 @@ module Api
     class BandsController < ApplicationController
 
       def index
-        bands = Band.all
+        bands = Band.all.page(params[:page]).per(5)
         render json: BandSerializer.new(bands).serialized_json
       end
     end
