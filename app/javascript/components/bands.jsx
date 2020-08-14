@@ -33,8 +33,10 @@ class Bands extends React.Component {
 
   render() {
     return (
-      <table>
-        <thead>
+      <div>
+        <h1>Welcome to the most irrelevant music table u could possibly find!</h1>
+        <table>
+          <thead>
           <tr>
             <th>
               <button name='name' onClick={this.handleClick}>Name</button>
@@ -46,19 +48,20 @@ class Bands extends React.Component {
               <button name='albums' onClick={this.handleClick}>Albums</button>
             </th>
           </tr>
-        </thead>
-        {this.state.bands.map(function(band) {
-          return (
-            <tbody>
+          </thead>
+          <tbody>
+          {this.state.bands.map(function(band) {
+            return (
               <tr key={band.id}>
                 <td>{band.attributes.name}</td>
                 <td>{band.attributes.genres}</td>
                 <td>{band.attributes.albums}</td>
               </tr>
-            </tbody>
-          )
-        }) }
-      </table>
+            )
+          }) }
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
