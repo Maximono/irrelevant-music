@@ -1,4 +1,4 @@
-# Ruby task
+# Task
 
  By Maksym Tesliuk.
 
