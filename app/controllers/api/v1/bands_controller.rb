@@ -3,10 +3,10 @@ module Api
     class BandsController < ApplicationController
 
       def index
-        bands = Band.page(params[:page]).per(5)
+        bands = Band.search(params[:query]).page(params[:page]).per(5)
         bands = bands.order("#{sort_column} #{sort_direction}") if params[:sort_column]
 
-        options = { meta: { total_pages: Band.page.per(5).total_pages } }
+        options = { meta: { total_pages: bands.page.per(5).total_pages } }
         render json: BandSerializer.new(bands, options).serialized_json
       end
 

@@ -34,5 +34,17 @@ describe 'Bands api' do
       expect(response).to have_http_status(:success)
       expect(parsed_response[:data].first[:attributes][:name]).to eq('Slayer')
     end
+
+    it 'returns bands searched by name' do
+      %w[Atilla Artillery Metallica].map do |name|
+        FactoryBot.create(:band, name: name)
+      end
+
+      get api_v1_bands_path(params: {query: 'till'})
+      parsed_response = JSON.parse(response.body).deep_symbolize_keys
+
+      expect(response).to have_http_status(:success)
+      expect(parsed_response[:data].size).to eq(2)
+    end
   end
 end
