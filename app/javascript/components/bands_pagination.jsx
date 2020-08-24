@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate'
 
 const BandsPagination = function(props) {
   const handleClick = function(page) {
-    props.handlePagination('pagination', {currentPage: page.selected + 1})
+    props.handlePagination('pagination', {nextPage: page.selected + 1})
   };
 
   return (
