@@ -1,11 +1,13 @@
 import React from "react";
 import getBands from "../api/client";
+import ReactPaginate from 'react-paginate';
 
 class Bands extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { bands: [], sortingColumn: 'name', sortingDirection: 'asc'};
+    this.state = { bands: [], sortingColumn: 'name', sortingDirection: 'asc', totalPages: 1};
     this.handleClick = this.handleClick.bind(this);
+    this.handlePaginationClick = this.handlePaginationClick.bind(this)
   }
 
   handleClick(event) {
@@ -24,10 +26,18 @@ class Bands extends React.Component {
     }
   }
 
+  handlePaginationClick() {
+    const self = this;
+    const paginationPage = event.currentTarget.activeElement.text;
+    getBands(this.state.sortingColumn, this.state.sortingDirection, paginationPage).then(function (data) {
+      self.setState({bands: data.bands, totalPages: data.totalPages})
+    });
+  }
+
   componentDidMount() {
-    const self = this
+    const self = this;
     getBands(this.state.sortingColumn, this.state.sortingDirection).then(function(data){
-      self.setState({bands: data.bands})
+      self.setState({bands: data.bands, totalPages: data.totalPages})
     })
   }
 
@@ -61,6 +71,15 @@ class Bands extends React.Component {
           }) }
           </tbody>
         </table>
+        <ReactPaginate
+          breakLabel={'...'}
+          pageCount={this.state.totalPages}
+          marginPagesDisplayed={1}
+          pageRangeDisplayed={2}
+          onPageChange={this.handlePaginationClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+        />
       </div>
     );
   }
