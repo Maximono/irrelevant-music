@@ -5,7 +5,9 @@ module Api
       def index
         bands = Band.page(params[:page]).per(5)
         bands = bands.order("#{sort_column} #{sort_direction}") if params[:sort_column]
-        render json: BandSerializer.new(bands).serialized_json
+
+        options = { meta: { total_pages: Band.page.per(5).total_pages } }
+        render json: BandSerializer.new(bands, options).serialized_json
       end
 
       private
